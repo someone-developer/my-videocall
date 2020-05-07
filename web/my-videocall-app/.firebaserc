@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "my-app-fd3af": {
+      "hosting": {
+        "my-videocall-app": [
+          "my-app-fd3af"
+        ]
+      }
+    }
+  }
+}

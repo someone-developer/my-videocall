@@ -1,1 +1,26 @@
-<p>home works!</p>
+<div class="container-fluid">
+<div class="row main-wrapper">
+ 
+  <div class="col-3 col-left">
+    <div  *ngIf="this.my_rooms.length==0" class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>RoomName</mat-label>
+        <input matInput [(ngModel)]="roomName"  maxlength="256" placeholder="enter room name">
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="addItem(roomName)">Add</button>
+ 
+    </div>
+    <button *ngIf="this.my_rooms.length" mat-raised-button color="danger" (click)="delete()">Delete Myroom</button>
+ 
+    <mat-list role="list">
+      <mat-list-item  *ngFor="let item of rooms | async" role="listitem">
+       {{item?.name}}
+     
+      </mat-list-item>
+    
+    </mat-list>
+
+  </div>
+  <div class="col-9"></div>
+</div>
+</div>
