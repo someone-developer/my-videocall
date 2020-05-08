@@ -9,23 +9,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  currentUser: any;
+  constructor(public auth: AngularFireAuth, private router: Router) { }
 
-  constructor(public auth: AngularFireAuth,private router: Router) { }
+  async ngOnInit(): Promise<void> {
+    this.currentUser = await this.auth.currentUser
+    if (this.currentUser) {
+      this.router.navigate(['/home'])
+    }
 
-  ngOnInit(): void {
-    this.auth.authState.subscribe(res=>{
-      if (auth) {
-        this.router.navigate(['/home'])
-      }
-    });
   }
-  login(){ 
-   
-    this.auth.signInWithPopup(new auth.GoogleAuthProvider()).then((res:any)=>{
+  login() {
+
+    this.auth.signInWithPopup(new auth.GoogleAuthProvider()).then((res: any) => {
       let userProfile = res;
       console.log(userProfile);
-       alert(userProfile.additionalUserInfo.profile.name);
+      alert(userProfile.additionalUserInfo.profile.name);
+      this.router.navigate(['/home'])
     });
   }
- 
+
 }
