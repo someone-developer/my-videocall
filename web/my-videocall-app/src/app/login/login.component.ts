@@ -12,11 +12,14 @@ export class LoginComponent implements OnInit {
   currentUser: any;
   constructor(public auth: AngularFireAuth, private router: Router) { }
 
-  async ngOnInit(): Promise<void> {
-    this.currentUser = await this.auth.currentUser
-    if (this.currentUser) {
-      this.router.navigate(['/home'])
-    }
+    ngOnInit() {
+    this.auth.authState.subscribe(async res=>{
+      this.currentUser = await this.auth.currentUser
+      if (this.currentUser) {
+        this.router.navigate(['/home'])
+      }
+    });
+
 
   }
   login() {

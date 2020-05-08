@@ -1,51 +1,67 @@
 <div class="container-fluid">
   <div class="row main-wrapper">
     <div class="col-3 col-left">
-      <div *ngIf="this.my_rooms.length == 0" class="example-form">
-        <mat-form-field class="example-full-width">
-          <mat-label>RoomName</mat-label>
-          <input
-            matInput
-            [(ngModel)]="roomName"
-            maxlength="256"
-            placeholder="enter room name"
-          />
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="addItem(roomName)">
-          Add
+      <div class="container-action text-center">
+        <div *ngIf="this.my_rooms.length == 0" class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>RoomName</mat-label>
+            <input
+              matInput
+              [(ngModel)]="roomName"
+              maxlength="256"
+              placeholder="enter room name"
+            />
+          </mat-form-field>
+          <button  mat-button color="primary" (click)="addItem(roomName)">
+            Add
+          </button>
+        </div>
+        <button
+          *ngIf="this.my_rooms.length"
+          mat-raised-button
+          color="warn"
+          (click)="delete()"
+        >
+          Delete My Room
         </button>
-      </div>
-      <button
-        *ngIf="this.my_rooms.length"
+        <mat-divider *ngIf="videoCallRoom" class="mt-1"></mat-divider>
+        <button
+        *ngIf="videoCallRoom"
         mat-raised-button
         color="danger"
-        (click)="delete()"
+        (click)="disconnect()"
       >
-        Delete Myroom
+        Disconnect
       </button>
+      </div>
+      <mat-divider class="mt-2"></mat-divider>
 
-      <button
-      *ngIf="videoCallRoom"
-      mat-raised-button
-      color="danger"
-      (click)="disconnect()"
-    >
-      Disconnect
-    </button>
+  
+      <ng-container *ngFor="let item of rooms | async"> 
+        <mat-card> 
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title> {{ item?.name }}</mat-card-title>
+           
+          </mat-card-header>
+           
+           <mat-card-actions>
+            <button
+            *ngIf="item.owner"
+            mat-button
+            color="warn"
+            (click)="join(item.owner)"
+          >
+           Join
+          </button>
+           </mat-card-actions>
+        </mat-card>
+       
+        <mat-divider class="mt-2"></mat-divider>
 
-      <mat-list role="list">
-        <mat-list-item *ngFor="let item of rooms | async" role="listitem">
-          {{ item?.name }}
-          <button
-          *ngIf="item.owner"
-          mat-raised-button
-          color="danger"
-          (click)="join(item.owner)"
-        >
-         Join
-        </button>
-        </mat-list-item>
-      </mat-list>
+      </ng-container>
+
+      
     </div>
     <div class="col-9">
 
